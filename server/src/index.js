@@ -161,4 +161,7 @@ app.use((e, _req, res, _next) => {
   bad(res, "Something went wrong on the server.", 500);
 });
 
-app.listen(PORT, () => console.log(`School ERP API listening on :${PORT}`));
+// On Vercel the platform runs the exported app itself; locally and on other hosts we start a server.
+if (!process.env.VERCEL) app.listen(PORT, () => console.log(`School ERP API listening on :${PORT}`));
+
+export default app;

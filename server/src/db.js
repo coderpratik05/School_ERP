@@ -4,7 +4,8 @@ import "dotenv/config";
 export const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_SSL === "true" ? { rejectUnauthorized: false } : undefined,
-  max: 10,
+  // serverless instances are many and short-lived, so keep each one small
+  max: process.env.VERCEL ? 3 : 10,
 });
 
 export const q = (text, params) => pool.query(text, params);
